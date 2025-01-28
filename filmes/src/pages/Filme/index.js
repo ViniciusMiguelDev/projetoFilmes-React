@@ -5,6 +5,8 @@ import "./filme-info.css";
 
 import api from "../../services/api";
 
+import { toast } from "react-toastify";
+
 function Filme() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -42,15 +44,18 @@ function Filme() {
 
     let filmesSalvos = JSON.parse(minhaLista) || [];
 
-    const hasFilme = filmesSalvos.some((filmesSalvos) => filmesSalvos.id == filme.id);
+    const hasFilme = filmesSalvos.some(
+      (filmesSalvos) => filmesSalvos.id == filme.id
+    );
 
     if (hasFilme) {
-      alert("Esse filme já está na lista");
+      toast.warn("Esse filme já está na lista");
       return;
     }
 
     filmesSalvos.push(filme);
     localStorage.setItem("@primeflix", JSON.stringify(filmesSalvos));
+    toast.success("Filme salvo com sucesso!");
   }
 
   if (loading) {
